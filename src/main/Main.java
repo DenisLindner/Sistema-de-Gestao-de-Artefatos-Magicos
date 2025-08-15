@@ -1,5 +1,12 @@
 package main;
 
+import dao.ArtefatoDAO;
+import dao.MagoDAO;
+import model.ArtefatoDeCombate;
+import model.ArtefatoDeCura;
+import model.ArtefatoMagico;
+import model.Mago;
+
 import java.sql.SQLException;
 import java.util.Scanner;
 
@@ -29,11 +36,59 @@ public class Main {
     }
 
     public static void cadastrarMago() throws SQLException{
+        System.out.println("Insira o ID do Mago:");
+        int idMago = SC.nextInt();
+        if (MagoDAO.existeCodigoMago(idMago)){
+            System.out.println("Código já cadastrado!");
+            return;
+        }
 
+        System.out.println("Insira o Nome do Mago:");
+        String nome = SC.next().trim().toUpperCase();
+
+        int nivel;
+        do {
+            System.out.println("Insira o Nível do Mago:");
+            nivel = SC.nextInt();
+        } while (nivel < 1 || nivel > 20);
+
+        MagoDAO.postMago(new Mago(idMago, nome, nivel));
+        System.out.println("Mago Cadastrado com Sucesso!");
     }
 
     public static void cadastrarArtefato() throws SQLException {
+        System.out.println("Insira o Nome do Artefato:");
+        String nome = SC.next().trim().toUpperCase();
 
+        int nivelMagia;
+        do {
+            System.out.println("Insira o Nível do Artefato:");
+            nivelMagia = SC.nextInt();
+        } while (nivelMagia < 1 || nivelMagia > 10);
+
+        System.out.println("Insira a Descrição do Artefato:");
+        String descricao = SC.nextLine().trim().toUpperCase();
+
+        ArtefatoMagico artefatoMagico = null;
+        boolean loop = true;
+        while (loop){
+            System.out.println("Qual o Tipo do Artefato?\n1 - Cura\n2 - Ataque\nEscolha:");
+            int opcao = SC.nextInt();
+            switch (opcao){
+                case 1 -> {
+                    artefatoMagico = new ArtefatoDeCura(nome, nivelMagia, descricao);
+                    loop = false;
+                }
+                case 2 -> {
+                    artefatoMagico = new ArtefatoDeCombate(nome, nivelMagia, descricao);
+                    loop = false;
+                }
+                default -> System.out.println("Opção Inválida!");
+            }
+        }
+
+        ArtefatoDAO.postArtefato(artefatoMagico);
+        System.out.println("Artefato Cadastrado com Sucesso!");
     }
 
     public static void emprestarArtefatoMago(){

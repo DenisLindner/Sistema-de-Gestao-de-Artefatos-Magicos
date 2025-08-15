@@ -56,4 +56,14 @@ public abstract class ArtefatoMagico {
     }
 
     public abstract void atributoExtra();
+
+    @Override
+    public String toString() {
+        return "CÓDIGO: "+this.codigo+
+                "NOME: "+this.nome+
+                "NÍVEL MAGIA: "+this.nivelMagia+
+                "DESCRIÇÃO: "+this.descricao+
+                "TIPO: "+this.getClass().getName()+
+                "STATUS: "+((this.idMago != 0)? "Emprestado" : "Disponível");
+    }
 }

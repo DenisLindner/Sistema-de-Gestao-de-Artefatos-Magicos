@@ -38,4 +38,8 @@ public class Mago {
     public void devolverArtefato(ArtefatoMagico artefatoMagico){
         this.artefatos.remove(artefatoMagico);
     }
+
+    public int verificarQuantidade(){
+        return this.artefatos.size();
+    }
 }
