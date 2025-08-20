@@ -16,7 +16,7 @@ public class ArtefatoDAO {
             ps.setString(2, artefatoMagico.getNome());
             ps.setInt(3, artefatoMagico.getNivelMagia());
             ps.setString(4, artefatoMagico.getDescricao());
-            ps.setString(5, artefatoMagico.getClass().getName());
+            ps.setString(5, artefatoMagico.getClass().getSimpleName());
             ps.setInt(6, artefatoMagico.getIdMago());
             ps.executeUpdate();
         }
