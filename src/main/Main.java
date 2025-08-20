@@ -91,7 +91,17 @@ public class Main {
         System.out.println("Artefato Cadastrado com Sucesso!");
     }
 
-    public static void emprestarArtefatoMago(){
+    public static void emprestarArtefatoMago() throws SQLException{
+        if (!ArtefatoDAO.existeArtefatoCadastrado()){
+            System.out.println("Nenhum artefato Cadastrado!");
+            return;
+        }
+
+        if (!MagoDAO.existeMagoCadastrado()){
+            System.out.println("Nenhum mago Cadastrado!");
+            return;
+        }
+
 
     }
 

@@ -5,9 +5,9 @@ import model.Mago;
 import java.sql.*;
 
 public class MagoDAO {
-    private static final String URL = "jdbc:postgresql://localhost:port/database";
-    private static final String USER = "user";
-    private static final String PASSWORD = "password";
+    private static final String URL = "jdbc:postgresql://aws-1-sa-east-1.pooler.supabase.com:6543/postgres";
+    private static final String USER = "postgres.vwpfkxbjxmykqdqklmwf";
+    private static final String PASSWORD = "Denisroot1";
 
     public static void postMago(Mago mago) throws SQLException {
         String comando = "INSERT INTO mago(id_mago, nome_mago, nivel_mago) VALUES(?,?,?);";
@@ -20,15 +20,19 @@ public class MagoDAO {
     }
 
     public static boolean existeCodigoMago(int idMago) throws SQLException{
+        String comando = "SELECT * FROM mago WHERE id_mago = ?;";
+        try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD); PreparedStatement ps = conn.prepareStatement(comando)) {
+            ps.setInt(1, idMago);
+            ResultSet rs = ps.executeQuery();
+            return rs.next();
+        }
+    }
+
+    public static boolean existeMagoCadastrado() throws SQLException{
         String comando = "SELECT * FROM mago;";
         try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD); PreparedStatement ps = conn.prepareStatement(comando)) {
             ResultSet rs = ps.executeQuery();
-            if (rs.next()){
-                if (rs.getInt("id_mago") == idMago){
-                    return true;
-                }
-            }
-            return false;
+            return rs.next();
         }
     }
 }
