@@ -1,9 +1,11 @@
 package model;
 
+import java.sql.SQLException;
+
 public class ArtefatoDeCombate extends ArtefatoMagico {
     private int ataque = 5;
 
-    public ArtefatoDeCombate(String nome, int nivelMagia, String descricao){
+    public ArtefatoDeCombate(String nome, int nivelMagia, String descricao) throws SQLException {
         super(nome, nivelMagia, descricao);
     }
 

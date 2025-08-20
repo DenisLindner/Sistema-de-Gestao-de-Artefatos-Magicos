@@ -58,7 +58,8 @@ public class Main {
 
     public static void cadastrarArtefato() throws SQLException {
         System.out.println("Insira o Nome do Artefato:");
-        String nome = SC.next().trim().toUpperCase();
+        String nome = SC.nextLine().toUpperCase();
+        SC.nextLine();
 
         int nivelMagia;
         do {
@@ -67,7 +68,8 @@ public class Main {
         } while (nivelMagia < 1 || nivelMagia > 10);
 
         System.out.println("Insira a Descrição do Artefato:");
-        String descricao = SC.nextLine().trim().toUpperCase();
+        String descricao = SC.nextLine().toUpperCase();
+        SC.nextLine();
 
         ArtefatoMagico artefatoMagico = null;
         boolean loop = true;

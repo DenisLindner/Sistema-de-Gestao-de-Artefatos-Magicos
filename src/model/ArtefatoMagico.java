@@ -1,20 +1,22 @@
 package model;
 
+import dao.ArtefatoDAO;
+
+import java.sql.SQLException;
+
 public abstract class ArtefatoMagico {
-    private static int codigoGlobal = 1;
     private String codigo;
     private String nome;
     private int nivelMagia;
     private String descricao;
     private int idMago;
 
-    public ArtefatoMagico(String nome, int nivelMagia, String descricao){
-        this.codigo = "A"+codigoGlobal;
+    public ArtefatoMagico(String nome, int nivelMagia, String descricao) throws SQLException {
+        this.codigo = "A"+ (ArtefatoDAO.tamanhoTabela()+1);
         this.nome = nome;
         this.nivelMagia = nivelMagia;
         this.descricao = descricao;
         this.idMago = 0;
-        codigoGlobal++;
     }
 
     public ArtefatoMagico(String codigo, String nome, int nivelMagia, String descricao, int idMago){

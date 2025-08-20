@@ -42,4 +42,16 @@ public class ArtefatoDAO {
             return artefatoMagico;
         }
     }
+
+    public static int tamanhoTabela() throws SQLException{
+        String comando = "SELECT COUNT(*) FROM artefato;";
+        try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD); PreparedStatement ps = conn.prepareStatement(comando)) {
+            ResultSet rs = ps.executeQuery();
+            int count = 0;
+            if (rs.next()){
+                 count = rs.getInt("count");
+            }
+            return count;
+        }
+    }
 }
