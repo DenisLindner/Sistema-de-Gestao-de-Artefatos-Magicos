@@ -47,14 +47,16 @@ public abstract class ArtefatoMagico {
         return idMago;
     }
 
-    public void emprestarArtefato(Mago mago){
+    public void emprestarArtefato(Mago mago) throws SQLException{
         this.idMago = mago.getIdMago();
         mago.emprestarArtefato(this);
+        ArtefatoDAO.updateArtefato(this);
     }
 
-    public void devolverArtefato(Mago mago){
+    public void devolverArtefato(Mago mago) throws SQLException{
         this.idMago = 0;
         mago.devolverArtefato(this);
+        ArtefatoDAO.updateArtefato(this);
     }
 
     public abstract void atributoExtra();
@@ -62,10 +64,10 @@ public abstract class ArtefatoMagico {
     @Override
     public String toString() {
         return "CÓDIGO: "+this.codigo+
-                "NOME: "+this.nome+
-                "NÍVEL MAGIA: "+this.nivelMagia+
-                "DESCRIÇÃO: "+this.descricao+
-                "TIPO: "+this.getClass().getName()+
-                "STATUS: "+((this.idMago != 0)? "Emprestado" : "Disponível");
+                "\nNOME: "+this.nome+
+                "\nNÍVEL MAGIA: "+this.nivelMagia+
+                "\nDESCRIÇÃO: "+this.descricao+
+                "\nTIPO: "+this.getClass().getSimpleName()+
+                "\nSTATUS: "+((this.idMago != 0)? "Emprestado" : "Disponível");
     }
 }

@@ -1,5 +1,6 @@
 package model;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class Mago {
@@ -27,19 +28,35 @@ public class Mago {
         return nivel;
     }
 
+    public void setArtefatos(ArrayList<ArtefatoMagico> artefatos) {
+        this.artefatos = artefatos;
+    }
+
     public ArrayList<ArtefatoMagico> getArtefatos() {
         return artefatos;
     }
 
-    public void emprestarArtefato(ArtefatoMagico artefatoMagico){
+    public void emprestarArtefato(ArtefatoMagico artefatoMagico) throws SQLException {
         this.artefatos.add(artefatoMagico);
     }
 
-    public void devolverArtefato(ArtefatoMagico artefatoMagico){
+    public void devolverArtefato(ArtefatoMagico artefatoMagico) throws SQLException{
         this.artefatos.remove(artefatoMagico);
     }
 
-    public int verificarQuantidade(){
-        return this.artefatos.size();
+    public boolean verificarQuantidadeEmprestimo(){
+        if (this.artefatos.size() == 3){
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+    @Override
+    public String toString() {
+        return "ID: "+this.idMago+
+                "\nNOME: "+this.nome+
+                "\nNÌVEL: "+this.nivel+
+                "\nQTD ARTEFATOS EMPRESTADOS: "+this.artefatos.size();
     }
 }

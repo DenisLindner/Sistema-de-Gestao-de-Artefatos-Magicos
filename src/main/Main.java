@@ -2,12 +2,14 @@ package main;
 
 import dao.ArtefatoDAO;
 import dao.MagoDAO;
+import dao.MagoDAOImpl;
 import model.ArtefatoDeCombate;
 import model.ArtefatoDeCura;
 import model.ArtefatoMagico;
 import model.Mago;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 //TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
@@ -57,25 +59,26 @@ public class Main {
     }
 
     public static void cadastrarArtefato() throws SQLException {
+        SC.nextLine();
         System.out.println("Insira o Nome do Artefato:");
         String nome = SC.nextLine().toUpperCase();
-        SC.nextLine();
 
         int nivelMagia;
         do {
             System.out.println("Insira o Nível do Artefato:");
             nivelMagia = SC.nextInt();
+            SC.nextLine();
         } while (nivelMagia < 1 || nivelMagia > 10);
 
         System.out.println("Insira a Descrição do Artefato:");
         String descricao = SC.nextLine().toUpperCase();
-        SC.nextLine();
 
         ArtefatoMagico artefatoMagico = null;
         boolean loop = true;
         while (loop){
             System.out.println("Qual o Tipo do Artefato?\n1 - Cura\n2 - Ataque\nEscolha:");
             int opcao = SC.nextInt();
+            SC.nextLine();
             switch (opcao){
                 case 1 -> {
                     artefatoMagico = new ArtefatoDeCura(nome, nivelMagia, descricao);
@@ -94,8 +97,8 @@ public class Main {
     }
 
     public static void emprestarArtefatoMago() throws SQLException{
-        if (!ArtefatoDAO.existeArtefatoCadastrado()){
-            System.out.println("Nenhum artefato Cadastrado!");
+        if (ArtefatoDAO.artefatosMagicosDisponiveis().isEmpty()){
+            System.out.println("Nenhum artefato Disponivel!");
             return;
         }
 
@@ -104,7 +107,43 @@ public class Main {
             return;
         }
 
+        listarTodosArtefatosDisponiveis();
 
+        System.out.println("Insira o código do Artefato:");
+        String codigo = SC.next().toUpperCase().trim();
+
+        ArtefatoMagico artefatoMagico = ArtefatoDAO.buscarArtfato(codigo);
+        if (artefatoMagico == null){
+            System.out.println("Artefato não Encontrado!");
+            return;
+        }
+
+        if (artefatoMagico.getIdMago() != 0){
+            System.out.println("Artefato já Emprestado!");
+            return;
+        }
+
+        ArrayList<Mago> magos = MagoDAOImpl.getTodosMagos();
+        System.out.println("Magos Cadastrados:");
+        for (Mago mago : magos){
+            System.out.println(mago.toString()+"\n");
+        }
+
+        System.out.println("Insira o id do Mago:");
+        int id = SC.nextInt();
+
+        Mago mago = MagoDAO.buscarMago(id);
+        if (mago == null){
+            System.out.println("Mago não encontrado!");
+            return;
+        }
+        if(!mago.verificarQuantidadeEmprestimo()){
+            System.out.println("Limite de Emprestimo atingido para o Mago!");
+            return;
+        }
+
+        artefatoMagico.emprestarArtefato(mago);
+        System.out.println("Empréstimo Realizado com Sucesso!");
     }
 
     public static void listarArtefatosMago(){
@@ -115,7 +154,15 @@ public class Main {
 
     }
 
-    public static void listarTodosArtefatosDisponiveis(){
-
+    public static void listarTodosArtefatosDisponiveis() throws SQLException{
+        ArrayList<ArtefatoMagico> artefatos = ArtefatoDAO.artefatosMagicosDisponiveis();
+        if (artefatos.isEmpty()){
+            System.out.println("Nenhum Artefato Disponível Cadastrado!");
+            return;
+        }
+        System.out.println("Artefatos Disponíveis:");
+        for (ArtefatoMagico artefatoMagico : artefatos){
+            System.out.println(artefatoMagico.toString()+"\n");
+        }
     }
 }
