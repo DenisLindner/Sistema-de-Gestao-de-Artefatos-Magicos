@@ -45,11 +45,7 @@ public class Mago {
     }
 
     public boolean verificarQuantidadeEmprestimo(){
-        if (this.artefatos.size() == 3){
-            return false;
-        } else {
-            return true;
-        }
+        return this.artefatos.size() >= 3;
     }
 
     @Override

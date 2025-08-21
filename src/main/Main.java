@@ -137,7 +137,7 @@ public class Main {
             System.out.println("Mago não encontrado!");
             return;
         }
-        if(!mago.verificarQuantidadeEmprestimo()){
+        if(mago.verificarQuantidadeEmprestimo()){
             System.out.println("Limite de Emprestimo atingido para o Mago!");
             return;
         }
@@ -178,8 +178,53 @@ public class Main {
         }
     }
 
-    public static void devolverArtefato(){
+    public static void devolverArtefato() throws SQLException{
+        ArrayList<Mago> magos = MagoDAOImpl.getTodosMagos();
+        if (magos.isEmpty()){
+            System.out.println("Nenhum Mago Cadastrado!");
+            return;
+        }
 
+        System.out.println("Magos Cadastrados:");
+        for (Mago mago : magos){
+            System.out.println(mago.toString()+"\n");
+        }
+
+        System.out.println("Insira o id do Mago:");
+        int id = SC.nextInt();
+
+        Mago mago = MagoDAO.buscarMago(id);
+        if (mago == null){
+            System.out.println("Mago não encontrado!");
+            return;
+        }
+        System.out.println("Mago "+mago.getNome()+" Escolhido!");
+        ArrayList<ArtefatoMagico> artefatos = mago.getArtefatos();
+        if (artefatos.isEmpty()){
+            System.out.println("Nenhum Artefato Emprestado!");
+            return;
+        }
+        System.out.println("Artefatos Emprestados:");
+        for (ArtefatoMagico artefatoMagico : artefatos){
+            System.out.println(artefatoMagico.toString()+"\n");
+        }
+
+        System.out.println("Insira o Código do artefato que deseja Devolver:");
+        String codigo = SC.next().toUpperCase().trim();
+
+        ArtefatoMagico artefatoMagico = ArtefatoDAO.buscarArtfato(codigo);
+        if (artefatoMagico == null){
+            System.out.println("Artefato não Encontrado!");
+            return;
+        }
+
+        if (artefatoMagico.getIdMago() != mago.getIdMago()){
+            System.out.println("Artefato já Não Emprestado para esse mago!");
+            return;
+        }
+
+        artefatoMagico.devolverArtefato(mago);
+        System.out.println("Artefato Devolvido com Sucesso!");
     }
 
     public static void listarTodosArtefatosDisponiveis() throws SQLException{

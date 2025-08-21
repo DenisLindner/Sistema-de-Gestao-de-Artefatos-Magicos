@@ -69,7 +69,7 @@ public class ArtefatoDAO {
             ArrayList<String> codigos = new ArrayList<>();
             ps.setInt(1, idMago);
             ResultSet rs = ps.executeQuery();
-            if (rs.next()){
+            while (rs.next()){
                 codigos.add(rs.getString("codigo_artefato"));
             }
             return codigos;
@@ -81,7 +81,7 @@ public class ArtefatoDAO {
         try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD); PreparedStatement ps = conn.prepareStatement(comando)) {
             ArrayList<ArtefatoMagico> artefatos = new ArrayList<>();
             ResultSet rs = ps.executeQuery();
-            if (rs.next()){
+            while (rs.next()){
                 ArtefatoMagico artefatoMagico = null;
                 if (rs.getString("tipo_artefato").equals("ArtefatoDeCura")){
                     artefatoMagico = new ArtefatoDeCura(rs.getString("codigo_artefato"), rs.getString("nome_artefato"), rs.getInt("nivel_magia"), rs.getString("descricao"), rs.getInt("id_mago"));
