@@ -1,17 +1,15 @@
 package dao;
 
-import model.ArtefatoDeCombate;
-import model.ArtefatoDeCura;
-import model.ArtefatoMagico;
+
 import model.Mago;
 
 import java.sql.*;
 import java.util.ArrayList;
 
 public class MagoDAO {
-    private static final String URL = "jdbc:postgresql://aws-1-sa-east-1.pooler.supabase.com:6543/postgres";
-    private static final String USER = "postgres.vwpfkxbjxmykqdqklmwf";
-    private static final String PASSWORD = "Denisroot1";
+    private static final String URL = "jdbc:postgresql://localhost:5432/guilda_arcanos";
+    private static final String USER = "seu_usuario";
+    private static final String PASSWORD = "sua_senha";
 
     public static void postMago(Mago mago) throws SQLException {
         String comando = "INSERT INTO mago(id_mago, nome_mago, nivel_mago) VALUES(?,?,?);";

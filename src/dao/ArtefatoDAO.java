@@ -8,9 +8,9 @@ import java.sql.*;
 import java.util.ArrayList;
 
 public class ArtefatoDAO {
-    private static final String URL = "jdbc:postgresql://aws-1-sa-east-1.pooler.supabase.com:6543/postgres";
-    private static final String USER = "postgres.vwpfkxbjxmykqdqklmwf";
-    private static final String PASSWORD = "Denisroot1";
+    private static final String URL = "jdbc:postgresql://localhost:5432/guilda_arcanos";
+    private static final String USER = "seu_usuario";
+    private static final String PASSWORD = "sua_senha";
 
     public static void postArtefato(ArtefatoMagico artefatoMagico) throws SQLException{
         String comando = "INSERT INTO artefato(codigo_artefato, nome_artefato, nivel_magia, descricao, tipo_artefato, id_mago) VALUES(?,?,?,?,?,?);";
@@ -82,7 +82,7 @@ public class ArtefatoDAO {
             ArrayList<ArtefatoMagico> artefatos = new ArrayList<>();
             ResultSet rs = ps.executeQuery();
             while (rs.next()){
-                ArtefatoMagico artefatoMagico = null;
+                ArtefatoMagico artefatoMagico;
                 if (rs.getString("tipo_artefato").equals("ArtefatoDeCura")){
                     artefatoMagico = new ArtefatoDeCura(rs.getString("codigo_artefato"), rs.getString("nome_artefato"), rs.getInt("nivel_magia"), rs.getString("descricao"), rs.getInt("id_mago"));
                 } else {
