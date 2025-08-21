@@ -27,19 +27,33 @@ O projeto foi desenvolvido em **Java** utilizando **JDBC com PostgreSQL** para p
 
 ## Estrutura do Projeto
 src/
+
 ├── dao/
+
 │ ├── ArtefatoDAO.java
+
 │ ├── ArtefatoDAOImpl.java
+
 │ ├── MagoDAO.java
+
 │ └── MagoDAOImpl.java
+
 │
+
 ├── main/
+
 │ └── Main.java
+
 │
+
 └── model/
+
 ├── ArtefatoMagico.java
+
 ├── ArtefatoDeCombate.java
+
 ├── ArtefatoDeCura.java
+
 └── Mago.java
 
 
@@ -76,6 +90,7 @@ Ajuste a conexão no seu código (URL, usuário e senha).
 Compile e execute o projeto:
 
 javac -cp ".;postgresql-42.7.3.jar" main/*.java dao/*.java model/*.java
+
 java -cp ".;postgresql-42.7.3.jar" main.Main
 
 Conceitos Utilizados
