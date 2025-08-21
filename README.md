@@ -62,6 +62,8 @@ src/
 
 ### Criação das Tabelas (PostgreSQL)
 
+CREATE DATABASE guilda_arcanos;
+
 CREATE TABLE IF NOT EXISTS mago (
     id_mago INT PRIMARY KEY,
     nome_mago VARCHAR(100) NOT NULL,
