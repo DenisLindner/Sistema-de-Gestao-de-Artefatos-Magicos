@@ -2,7 +2,6 @@ package main;
 
 import dao.ArtefatoDAO;
 import dao.MagoDAO;
-import dao.MagoDAOImpl;
 import model.ArtefatoDeCombate;
 import model.ArtefatoDeCura;
 import model.ArtefatoMagico;
@@ -123,7 +122,7 @@ public class Main {
             return;
         }
 
-        ArrayList<Mago> magos = MagoDAOImpl.getTodosMagos();
+        ArrayList<Mago> magos = MagoDAO.getTodosMagos();
         System.out.println("Magos Cadastrados:");
         for (Mago mago : magos){
             System.out.println(mago.toString()+"\n");
@@ -147,7 +146,7 @@ public class Main {
     }
 
     public static void listarArtefatosMago() throws SQLException{
-        ArrayList<Mago> magos = MagoDAOImpl.getTodosMagos();
+        ArrayList<Mago> magos = MagoDAO.getTodosMagos();
         if (magos.isEmpty()){
             System.out.println("Nenhum Mago Cadastrado!");
             return;
@@ -179,7 +178,7 @@ public class Main {
     }
 
     public static void devolverArtefato() throws SQLException{
-        ArrayList<Mago> magos = MagoDAOImpl.getTodosMagos();
+        ArrayList<Mago> magos = MagoDAO.getTodosMagos();
         if (magos.isEmpty()){
             System.out.println("Nenhum Mago Cadastrado!");
             return;

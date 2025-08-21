@@ -1,5 +1,6 @@
 package dao;
 
+import conexao.ConectarBanco;
 import model.ArtefatoDeCombate;
 import model.ArtefatoDeCura;
 import model.ArtefatoMagico;
@@ -8,13 +9,9 @@ import java.sql.*;
 import java.util.ArrayList;
 
 public class ArtefatoDAO {
-    private static final String URL = "jdbc:postgresql://localhost:5432/guilda_arcanos";
-    private static final String USER = "seu_usuario";
-    private static final String PASSWORD = "sua_senha";
-
     public static void postArtefato(ArtefatoMagico artefatoMagico) throws SQLException{
         String comando = "INSERT INTO artefato(codigo_artefato, nome_artefato, nivel_magia, descricao, tipo_artefato, id_mago) VALUES(?,?,?,?,?,?);";
-        try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD); PreparedStatement ps = conn.prepareStatement(comando)) {
+        try (Connection conn = ConectarBanco.conectar(); PreparedStatement ps = conn.prepareStatement(comando)) {
             ps.setString(1, artefatoMagico.getCodigo());
             ps.setString(2, artefatoMagico.getNome());
             ps.setInt(3, artefatoMagico.getNivelMagia());
@@ -27,7 +24,7 @@ public class ArtefatoDAO {
 
     public static void updateArtefato(ArtefatoMagico artefatoMagico) throws SQLException{
         String comando = "UPDATE artefato SET id_mago = ? WHERE codigo_artefato = ?;";
-        try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD); PreparedStatement ps = conn.prepareStatement(comando)) {
+        try (Connection conn = ConectarBanco.conectar(); PreparedStatement ps = conn.prepareStatement(comando)) {
             ps.setInt(1, artefatoMagico.getIdMago());
             ps.setString(2, artefatoMagico.getCodigo());
             ps.executeUpdate();
@@ -36,7 +33,7 @@ public class ArtefatoDAO {
 
     public static ArtefatoMagico buscarArtfato(String codigo) throws  SQLException{
         String comando = "SELECT * FROM artefato WHERE codigo_artefato = ?;";
-        try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD); PreparedStatement ps = conn.prepareStatement(comando)) {
+        try (Connection conn = ConectarBanco.conectar(); PreparedStatement ps = conn.prepareStatement(comando)) {
             ps.setString(1, codigo);
             ResultSet rs = ps.executeQuery();
             ArtefatoMagico artefatoMagico = null;
@@ -53,7 +50,7 @@ public class ArtefatoDAO {
 
     public static int tamanhoTabela() throws SQLException{
         String comando = "SELECT COUNT(*) FROM artefato;";
-        try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD); PreparedStatement ps = conn.prepareStatement(comando)) {
+        try (Connection conn = ConectarBanco.conectar(); PreparedStatement ps = conn.prepareStatement(comando)) {
             ResultSet rs = ps.executeQuery();
             int count = 0;
             if (rs.next()){
@@ -63,22 +60,22 @@ public class ArtefatoDAO {
         }
     }
 
-    public static ArrayList<String> codigosArtefatosMago(int idMago) throws SQLException{
+    public static ArrayList<ArtefatoMagico> artefatoMagicosMago(int idMago) throws SQLException{
         String comando = "SELECT * FROM artefato WHERE id_mago = ?;";
-        try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD); PreparedStatement ps = conn.prepareStatement(comando)) {
-            ArrayList<String> codigos = new ArrayList<>();
+        try (Connection conn = ConectarBanco.conectar(); PreparedStatement ps = conn.prepareStatement(comando)) {
+            ArrayList<ArtefatoMagico> artefatos = new ArrayList<>();
             ps.setInt(1, idMago);
             ResultSet rs = ps.executeQuery();
             while (rs.next()){
-                codigos.add(rs.getString("codigo_artefato"));
+                artefatos.add(ArtefatoDAO.buscarArtfato(rs.getString("codigo_artefato")));
             }
-            return codigos;
+            return artefatos;
         }
     }
 
     public static ArrayList<ArtefatoMagico> artefatosMagicosDisponiveis() throws SQLException{
         String comando = "SELECT * FROM artefato WHERE id_mago = 0;";
-        try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD); PreparedStatement ps = conn.prepareStatement(comando)) {
+        try (Connection conn = ConectarBanco.conectar(); PreparedStatement ps = conn.prepareStatement(comando)) {
             ArrayList<ArtefatoMagico> artefatos = new ArrayList<>();
             ResultSet rs = ps.executeQuery();
             while (rs.next()){

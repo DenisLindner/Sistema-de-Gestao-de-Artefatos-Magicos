@@ -3,7 +3,6 @@ package model;
 import java.sql.SQLException;
 
 public class ArtefatoDeCombate extends ArtefatoMagico {
-    private int ataque = 5;
 
     public ArtefatoDeCombate(String nome, int nivelMagia, String descricao) throws SQLException {
         super(nome, nivelMagia, descricao);
@@ -15,6 +14,7 @@ public class ArtefatoDeCombate extends ArtefatoMagico {
 
     @Override
     public void atributoExtra(){
+        int ataque = 5;
         System.out.println("Ataque: "+(ataque*this.getNivelMagia()));
     }
 }
