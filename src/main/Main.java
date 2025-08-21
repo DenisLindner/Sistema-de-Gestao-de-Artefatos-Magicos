@@ -146,8 +146,36 @@ public class Main {
         System.out.println("Empréstimo Realizado com Sucesso!");
     }
 
-    public static void listarArtefatosMago(){
+    public static void listarArtefatosMago() throws SQLException{
+        ArrayList<Mago> magos = MagoDAOImpl.getTodosMagos();
+        if (magos.isEmpty()){
+            System.out.println("Nenhum Mago Cadastrado!");
+            return;
+        }
 
+        System.out.println("Magos Cadastrados:");
+        for (Mago mago : magos){
+            System.out.println(mago.toString()+"\n");
+        }
+
+        System.out.println("Insira o id do Mago:");
+        int id = SC.nextInt();
+
+        Mago mago = MagoDAO.buscarMago(id);
+        if (mago == null){
+            System.out.println("Mago não encontrado!");
+            return;
+        }
+        System.out.println("Mago "+mago.getNome()+" Escolhido!");
+        ArrayList<ArtefatoMagico> artefatos = mago.getArtefatos();
+        if (artefatos.isEmpty()){
+            System.out.println("Nenhum Artefato Emprestado!");
+            return;
+        }
+        System.out.println("Artefatos Emprestados:");
+        for (ArtefatoMagico artefatoMagico : artefatos){
+            System.out.println(artefatoMagico.toString()+"\n");
+        }
     }
 
     public static void devolverArtefato(){
