@@ -76,8 +76,7 @@ CREATE TABLE IF NOT EXISTS artefato (
     nivel_magia INT NOT NULL,
     descricao TEXT NOT NULL,
     tipo_artefato TEXT NOT NULL,
-    id_mago INT NOT NULL,
-    CONSTRAINT fk_mago FOREIGN KEY (id_mago) REFERENCES mago(id_mago)
+    id_mago INT NOT NULL
 );
 
 ## Como Executar
