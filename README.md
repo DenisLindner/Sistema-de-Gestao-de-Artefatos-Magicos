@@ -83,7 +83,7 @@ CREATE TABLE IF NOT EXISTS artefato (
 ## Como Executar
 Clone este repositório:
 
-git clone https://github.com/SEU-USUARIO/Sistema-Guilda-Arcanos.git
+git clone https://github.com/DenisLindner/Sistema-de-Gestao-de-Artefatos-Magicos.git
 
 Configure o banco de dados PostgreSQL com as tabelas acima.
 
