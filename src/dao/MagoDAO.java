@@ -53,7 +53,7 @@ public class MagoDAO {
         try (Connection conn = ConectarBanco.conectar(); PreparedStatement ps = conn.prepareStatement(comando)) {
             ResultSet rs = ps.executeQuery();
             ArrayList<Mago> magos = new ArrayList<>();
-            if (rs.next()){
+            while (rs.next()){
                 Mago mago = new Mago(rs.getInt("id_mago"), rs.getString("nome_mago"), rs.getInt("nivel_mago"));
                 mago.setArtefatos(ArtefatoDAO.artefatoMagicosMago(mago.getIdMago()));
                 magos.add(mago);
