@@ -49,6 +49,9 @@ public class Main {
         do {
             System.out.println("Insira o Nível do Mago:");
             nivel = Entradas.entradaInteiro();
+            if (nivel < 1 || nivel > 20){
+                System.out.println("Entrada Inválida! (1 - 20)");
+            }
         } while (nivel < 1 || nivel > 20);
 
         MagoDAO.postMago(new Mago(idMago, nome, nivel));

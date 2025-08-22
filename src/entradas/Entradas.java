@@ -21,8 +21,8 @@ public class Entradas {
 
     public static String entradaString(){
         String string;
+        SC.nextLine();
         do {
-            SC.nextLine();
             string = SC.nextLine().toUpperCase();
             if (string.isEmpty()){
                 System.out.println("Entrada Inválida! Tente Novamente:");
